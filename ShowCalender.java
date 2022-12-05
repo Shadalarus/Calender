@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+
 class ShowCalender extends WindowAdapter implements ActionListener
 {
     Frame f;
@@ -8,7 +10,8 @@ class ShowCalender extends WindowAdapter implements ActionListener
     Choice monthlist;
     static TextField monthYear,weekname,week1,week2,week3,week4,week5,inYear;
     static TextArea holidays;
-    int storeMonth,storeYear;
+    int storeMonth = getMonth();//sets starting month to current month
+    int storeYear = getYear();//sets starting year to current year
     ShowCalender()
     {
         f=new Frame("CALENDER");
@@ -24,7 +27,7 @@ class ShowCalender extends WindowAdapter implements ActionListener
         search=new Button("Search");
         inYear=new TextField();
         monthYear=new TextField();
-        weekname=new TextField("    SUNDAY        MONDAY        TUEDAY        WEDNESDAY        THURSDAY        FRIDAY        SATURDAY");
+        weekname=new TextField("    SUNDAY        MONDAY            TUEDAY          WEDNESDAY          THURSDAY            FRIDAY           SATURDAY");//changed spacing to fix formatting
         week1=new TextField(75);
         week2=new TextField(75);
         week3=new TextField(75);
@@ -208,7 +211,21 @@ class ShowCalender extends WindowAdapter implements ActionListener
     public void windowClosing(WindowEvent e) 
     {  
         f.dispose();  
-    } 
+    }
+
+    //gets current year
+    public static int getYear() {
+        LocalDate currentdate = LocalDate.now();
+        int year = currentdate.getYear();
+        return year;
+    }
+
+    //gets current month
+    public static int getMonth() {
+        LocalDate currentdate = LocalDate.now();
+        int month = currentdate.getMonthValue();
+        return month;
+    }
 
     public static void printCalender(int m,int y)
     {
@@ -216,12 +233,17 @@ class ShowCalender extends WindowAdapter implements ActionListener
         int ar[]={31,y%100==0?y%400==0?29:28:y%4==0?29:28,31,30,31,30,31,31,30,31,30,31};
         String month[]={"JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
         String holiday[]=new String[12];
-        holiday[0]="01 -  New Year's Day\n14 - Makar Sankranti / Pongal\n26 - Republic Day";
+        holiday[0]="01 -  New Year's Day\n06 - Epiphany\n14 - Makar Sankranti / Pongal\n26 - Republic Day";
+        holiday[1]="02 - Candlemas\n14 - St.Valentine's Day";
+        holiday[2]="19 - St.Joseph's Day";
         holiday[3]="14 - Mahavir Jayanti\n19 - Good Friday";
         holiday[4]="01 - Labour Day";
+        holiday[5]="29 - Feast of Saints Peter and Paul";
+        holiday[6]="15 - Saint Vladimir Day";
         holiday[7]="15 - Independence Day";
         holiday[8]="05 - Teacher's Day";
-        holiday[9]="02 - Gandhi Jayanti";
+        holiday[9]="02 - Gandhi Jayanti\n31 - Halloween/All Hallows Eve";
+        holiday[10]="02 - All Souls' Day";
         holiday[11]="25 - Christmas";
         if(y>0)
         {
@@ -266,11 +288,11 @@ class ShowCalender extends WindowAdapter implements ActionListener
                 cweek++;
                 if(run<odd_day+1)
                 {
-                    weeks[wcount]=weeks[wcount]+"\t";
+                    weeks[wcount]=weeks[wcount]+"\t\t";//changed spacing to fix formatting
                 }
                 else if(cweek<=7)
                 {
-                    weeks[wcount]=" "+weeks[wcount]+count+"\t";
+                    weeks[wcount]=" "+weeks[wcount]+count+"\t\t";//changed spacing to fix formatting
                     count++;
                 }
                 else
